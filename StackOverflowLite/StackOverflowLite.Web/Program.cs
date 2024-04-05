@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
+using StackOverflowLite.Application;
+using StackOverflowLite.Domain;
+using StackOverflowLite.Infrastructure;
 using StackOverflowLite.Web;
 using StackOverflowLite.Web.Data;
 
@@ -20,12 +23,11 @@ try
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
     builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
     {
+        containerBuilder.RegisterModule(new DomainModule());
+        containerBuilder.RegisterModule(new ApplicationModule());
+        containerBuilder.RegisterModule(new InfrastructureModule());
         containerBuilder.RegisterModule(new WebModule());
     });
-
-
-
-
 
     // Add services to the container.
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
