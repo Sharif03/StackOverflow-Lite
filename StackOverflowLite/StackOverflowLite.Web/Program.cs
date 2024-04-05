@@ -20,7 +20,7 @@ try
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
     builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
     {
-        containerBuilder.RegisterModule(new StackOverflowLiteModule());
+        containerBuilder.RegisterModule(new WebModule());
     });
 
 

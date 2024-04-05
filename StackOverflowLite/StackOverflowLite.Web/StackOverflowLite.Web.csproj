@@ -17,4 +17,9 @@
     <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\StackOverflowLite.Application\StackOverflowLite.Application.csproj" />
+    <ProjectReference Include="..\StackOverflowLite.Infrastructure\StackOverflowLite.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

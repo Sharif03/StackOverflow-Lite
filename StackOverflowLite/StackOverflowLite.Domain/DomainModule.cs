@@ -1,7 +1,8 @@
 ﻿using Autofac;
-namespace StackOverflowLite.Web
+
+namespace StackOverflowLite.Domain
 {
-    public class StackOverflowLiteModule : Module
+    public class DomainModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
