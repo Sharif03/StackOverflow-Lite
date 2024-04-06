@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using StackOverflowLite.Web.Data;
+using StackOverflowLite.Infrastructure;
 using System;
 
 namespace StackOverflowLite.Web.Data.Migrations
