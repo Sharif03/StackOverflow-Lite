@@ -25,26 +25,26 @@ namespace StackOverflowLite.Web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegistrationModel model)
         {
-            (IEnumerable<IdentityError>? errors, string? redirectLocation) response = (null, null);
-
             if (ModelState.IsValid)
             {
                 model.Resolve(_scope);
-                response = await model.RegisterAsync(Url.Content("~/"));
+                var response = await model.RegisterAsync(Url.Content("~/"));
+
+                if (response.errors is not null)
+                {
+                    foreach (var error in response.errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return View(model);
+                }
+                else
+                {
+                    return Redirect(response.redirectLocation);
+                }
             }
 
-            if (response.errors is not null)
-            {
-                foreach (var error in response.errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-                return View(model);
-            }
-            else
-            {
-                return Redirect(response.redirectLocation);
-            }
+            return View(model);
         }
     }
 }

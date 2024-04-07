@@ -11,6 +11,7 @@ using StackOverflowLite.Infrastructure.Extensions;
 using StackOverflowLite.Web;
 using System.Reflection;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using StackOverflowLite.Infrastructure.Email;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +44,8 @@ try
     builder.Services.AddIdentity();
     builder.Services.AddControllersWithViews();
     builder.Services.AddCookieAuthentication();
+
+    builder.Services.Configure<Smtp>(builder.Configuration.GetSection("Smtp"));
 
     var app = builder.Build();
 
