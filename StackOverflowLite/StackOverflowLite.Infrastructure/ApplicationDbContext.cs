@@ -1,9 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using StackOverflowLite.Infrastructure.Membership;
 
 namespace StackOverflowLite.Infrastructure
 {
-    public class ApplicationDbContext : IdentityDbContext, IApplicationDbContext
+    public class ApplicationDbContext : 
+        IdentityDbContext<ApplicationUser,
+        ApplicationRole, Guid,
+        ApplicationUserClaim, ApplicationUserRole,
+        ApplicationUserLogin, ApplicationRoleClaim,
+        ApplicationUserToken>, IApplicationDbContext
     {
         private readonly string _connectionString;
         private readonly string _migrationAssembly;

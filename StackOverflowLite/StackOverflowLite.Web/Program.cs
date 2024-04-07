@@ -7,8 +7,10 @@ using Serilog.Events;
 using StackOverflowLite.Application;
 using StackOverflowLite.Domain;
 using StackOverflowLite.Infrastructure;
+using StackOverflowLite.Infrastructure.Extensions;
 using StackOverflowLite.Web;
 using System.Reflection;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,10 +40,9 @@ try
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(connectionString, (m) => m.MigrationsAssembly(migrationAssembly)));
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-    builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-        .AddEntityFrameworkStores<ApplicationDbContext>();
+    builder.Services.AddIdentity();
     builder.Services.AddControllersWithViews();
+    builder.Services.AddCookieAuthentication();
 
     var app = builder.Build();
 
@@ -63,6 +64,10 @@ try
     app.UseRouting();
 
     app.UseAuthorization();
+
+    app.MapControllerRoute(
+        name: "areas",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
     app.MapControllerRoute(
         name: "default",
