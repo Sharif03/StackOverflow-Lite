@@ -4,4 +4,4 @@
 **/*.user
 **/Logs/*
 **/*~
-
+appsettings.json
