@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-StackOverflowLite.EmailService-f12b38d6-3570-4b96-b5da-a7a74a72dee5</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="9.0.0" />
+	<PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+	<PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="7.0.1" />
+	<PackageReference Include="Serilog.Extensions.Hosting" Version="7.0.0" />
+	<PackageReference Include="Serilog.Settings.Configuration" Version="7.0.1" />
+	<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+  </ItemGroup>
+</Project>

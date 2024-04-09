@@ -5,11 +5,13 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StackOverflowLite.Web", "StackOverflowLite.Web\StackOverflowLite.Web.csproj", "{4BB86ED5-1E7D-4E8A-9CF7-1EB96C6FFF0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StackOverflowLite.Domain", "StackOverflowLite.Domain\StackOverflowLite.Domain.csproj", "{D0EAD72E-B7A6-4F31-8A49-0DE09F9918F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StackOverflowLite.Domain", "StackOverflowLite.Domain\StackOverflowLite.Domain.csproj", "{D0EAD72E-B7A6-4F31-8A49-0DE09F9918F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StackOverflowLite.Application", "StackOverflowLite.Application\StackOverflowLite.Application.csproj", "{3BBCF44F-2CF7-48AD-B0C9-0B9B540A0837}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StackOverflowLite.Application", "StackOverflowLite.Application\StackOverflowLite.Application.csproj", "{3BBCF44F-2CF7-48AD-B0C9-0B9B540A0837}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StackOverflowLite.Infrastructure", "StackOverflowLite.Infrastructure\StackOverflowLite.Infrastructure.csproj", "{A53170FB-F05A-43D3-BE20-E6EE20E908E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StackOverflowLite.Infrastructure", "StackOverflowLite.Infrastructure\StackOverflowLite.Infrastructure.csproj", "{A53170FB-F05A-43D3-BE20-E6EE20E908E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StackOverflowLite.EmailService", "StackOverflowLite.EmailService\StackOverflowLite.EmailService.csproj", "{AFD0A1CB-F317-4B47-B5D8-81ED9E20D9BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{A53170FB-F05A-43D3-BE20-E6EE20E908E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A53170FB-F05A-43D3-BE20-E6EE20E908E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A53170FB-F05A-43D3-BE20-E6EE20E908E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFD0A1CB-F317-4B47-B5D8-81ED9E20D9BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFD0A1CB-F317-4B47-B5D8-81ED9E20D9BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFD0A1CB-F317-4B47-B5D8-81ED9E20D9BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFD0A1CB-F317-4B47-B5D8-81ED9E20D9BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
