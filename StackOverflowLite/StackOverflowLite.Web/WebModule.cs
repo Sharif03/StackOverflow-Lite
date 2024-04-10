@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿
+using Amazon.SQS;
+using Autofac;
 using StackOverflowLite.Web.Models;
 
 namespace StackOverflowLite.Web
@@ -9,6 +11,8 @@ namespace StackOverflowLite.Web
         {
             builder.RegisterType<RegistrationModel>().AsSelf();
             builder.RegisterType<LoginModel>().AsSelf();
+
+            
         }
     }
 }

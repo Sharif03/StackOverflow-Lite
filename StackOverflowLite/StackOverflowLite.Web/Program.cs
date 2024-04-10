@@ -12,6 +12,7 @@ using StackOverflowLite.Web;
 using System.Reflection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using StackOverflowLite.Infrastructure.Email;
+using Amazon.SQS;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,9 @@ try
         containerBuilder.RegisterModule(new ApplicationModule());
         containerBuilder.RegisterModule(new InfrastructureModule(connectionString, migrationAssembly));
         containerBuilder.RegisterModule(new WebModule());
+
+        // Register AWS SQS client
+        containerBuilder.Register(c => new AmazonSQSClient()).As<IAmazonSQS>();
     });
 
     // Add services to the container.
