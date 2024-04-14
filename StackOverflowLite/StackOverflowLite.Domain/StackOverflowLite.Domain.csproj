@@ -11,4 +11,10 @@
     <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entities\" />
+	<Folder Include="Exceptions\" />
+	<Folder Include="Repositories\" />
+  </ItemGroup>
+
 </Project>

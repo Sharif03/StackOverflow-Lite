@@ -1,6 +1,9 @@
 ﻿using Autofac;
+using StackOverflowLite.Application;
 using StackOverflowLite.Application.Utilities;
+using StackOverflowLite.Domain.Repositories;
 using StackOverflowLite.Infrastructure.Email;
+using StackOverflowLite.Infrastructure.Repositories;
 
 namespace StackOverflowLite.Infrastructure
 {
@@ -22,8 +25,12 @@ namespace StackOverflowLite.Infrastructure
             builder.RegisterType<ApplicationDbContext>().As<IApplicationDbContext>()
                 .WithParameter("connectionString", _connectionString)
                 .WithParameter("migrationAssembly", _migrationAssembly)
-                .InstancePerLifetimeScope();
+            .InstancePerLifetimeScope();
 
+            builder.RegisterType<ApplicationUnitOfWork>().As<IApplicationUnitOfWork>()
+                .InstancePerLifetimeScope();
+            builder.RegisterType<QuestionRepository>().As<IQuestionRepository>()
+                .InstancePerLifetimeScope();
             builder.RegisterType<HtmlEmailService>().As<IEmailService>()
                 .InstancePerLifetimeScope();
         }
