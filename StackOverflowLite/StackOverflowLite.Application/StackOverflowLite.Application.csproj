@@ -15,4 +15,9 @@
     <ProjectReference Include="..\StackOverflowLite.Domain\StackOverflowLite.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Posting\DTOs\" />
+	<Folder Include="Features\Posting\Services\" />
+  </ItemGroup>
+
 </Project>
