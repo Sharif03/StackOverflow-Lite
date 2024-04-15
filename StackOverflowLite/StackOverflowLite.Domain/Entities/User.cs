@@ -22,5 +22,6 @@ namespace StackOverflowLite.Domain.Entities
         public string Password { get; set; }
         public bool IsVerified { get; private set; }
         public Level UserLevel { get; set; }
+        public List<Question> Question { get; set; }
     }
 }
