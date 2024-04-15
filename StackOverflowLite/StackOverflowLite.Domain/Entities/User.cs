@@ -8,9 +8,9 @@ namespace StackOverflowLite.Domain.Entities
 {
     public enum Level
     {
-        Beginner,
-        Intermediate,
-        Advanced
+        Bronze,
+        Silver,
+        Gold
     }
     public class User : IEntity<Guid>
     {
