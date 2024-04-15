@@ -1,15 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using StackOverflowLite.Domain.Entities;
 using StackOverflowLite.Infrastructure.Membership;
 
 namespace StackOverflowLite.Infrastructure
 {
-    public class ApplicationDbContext : 
-        IdentityDbContext<ApplicationUser,
-        ApplicationRole, Guid,
-        ApplicationUserClaim, ApplicationUserRole,
-        ApplicationUserLogin, ApplicationRoleClaim,
-        ApplicationUserToken>, IApplicationDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid, ApplicationUserClaim, 
+        ApplicationUserRole, ApplicationUserLogin, ApplicationRoleClaim, ApplicationUserToken>, IApplicationDbContext
     {
         private readonly string _connectionString;
         private readonly string _migrationAssembly;
@@ -27,6 +24,11 @@ namespace StackOverflowLite.Infrastructure
             }
 
             base.OnConfiguring(optionBuilder);
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
