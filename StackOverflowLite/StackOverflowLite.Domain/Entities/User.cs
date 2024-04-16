@@ -16,9 +16,9 @@ namespace StackOverflowLite.Domain.Entities
     {
         public Guid Id { get; set; }
         public string UserName { get; set; }
-        public string Email { get; set; }
-        public bool IsVerified { get; private set; }
+        public bool IsVerified { get; set; }
         public Level UserLevel { get; set; }
-        public List<Question> Question { get; set; }
+        public IList<Question> Questions { get; set; }
+        public IList<Comment> Comments { get; set; }
     }
 }

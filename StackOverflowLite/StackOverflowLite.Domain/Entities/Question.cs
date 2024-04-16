@@ -14,7 +14,9 @@ namespace StackOverflowLite.Domain.Entities
         public string Content { get; set; }
         public int Upvote { get; set; }
         public int Downvote { get; set; }
+        public DateTime QuestionPosted { get; set; }
         public Guid UserId { get; set; }
-        public List<Comment> Comments { get; set; }
+        public User User { get; set; }
+        public IList<Comment> Comments { get; set; }
     }
 }
