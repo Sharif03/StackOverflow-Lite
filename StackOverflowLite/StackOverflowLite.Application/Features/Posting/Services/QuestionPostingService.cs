@@ -17,7 +17,7 @@ namespace StackOverflowLite.Application.Features.Posting.Services
             _applicationUnitOfWork = applicationUnitOfWork;
         }
 
-        public async Task CreateQuestionAsync(string questionTitle)
+        public async Task CreateQuestionAsync(string questionTitle, string questionContent, string questionTags)
         {
             bool isDuplicate = await _applicationUnitOfWork.QuestionRepository.IsTitleDuplicateAsync(questionTitle);
             if (isDuplicate)

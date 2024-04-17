@@ -9,6 +9,6 @@ namespace StackOverflowLite.Application.Features.Posting.Services
 {
 	public interface IQuestionPostingService
 	{
-        Task CreateQuestionAsync(string questionTitle);
+        Task CreateQuestionAsync(string questionTitle, string questionContent, string questionTags);
     }
 }
