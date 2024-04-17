@@ -32,5 +32,39 @@ namespace StackOverflowLite.Web.Areas.Admin.Controllers
             return View(model);
         }
 
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(QuestionCreateModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    model.Resolve(_scope);
+                    await model.CreateQuestionAsync();
+
+                    TempData.Put("ResponseMessage", new ResponseModel
+                    {
+                        Message = "Question created successfully",
+                        Type = ResponseTypes.Success
+                    });
+
+                    return RedirectToAction("Index");
+                }
+                catch (DuplicateTitleException ex)
+                {
+                    _logger.LogError(ex, "Server Error");
+                    TempData.Put("ResponseMessage", new ResponseModel
+                    {
+                        Message = "There was a problem in creating question",
+                        Type = ResponseTypes.Danger
+                    });
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Server Error");
+                }
+            }
+            return View(model);
+        }
     }
 }
