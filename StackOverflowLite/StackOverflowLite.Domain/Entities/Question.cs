@@ -12,6 +12,7 @@ namespace StackOverflowLite.Domain.Entities
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
+        public string Tags { get; set; }
         public int Upvote { get; set; }
         public int Downvote { get; set; }
         public DateTime QuestionPosted { get; set; }
