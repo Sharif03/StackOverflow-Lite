@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace StackOverflowLite.Application.Features.Posting.Services
 {
-	public interface IQuestionManagementService
+	public interface IQuestionPostingService
 	{
-		
+        Task CreateQuestionAsync(string questionTitle);
     }
 }

@@ -10,6 +10,6 @@ namespace StackOverflowLite.Application
 {
 	public interface IApplicationUnitOfWork : IUnitOfWork
 	{
-		
-	}
+        IQuestionRepository QuestionRepository { get; }
+    }
 }

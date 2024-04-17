@@ -9,6 +9,6 @@ namespace StackOverflowLite.Domain.Repositories
 {
 	public interface IQuestionRepository : IRepositoryBase<Question, Guid>
 	{
-		
-	}
+        Task<bool> IsTitleDuplicateAsync(string questionTitle, Guid? id = null);
+    }
 }

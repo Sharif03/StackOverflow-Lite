@@ -17,6 +17,17 @@ namespace StackOverflowLite.Infrastructure.Repositories
 		{
 
 		}
+        public async Task<bool> IsTitleDuplicateAsync(string questionTitle, Guid? id = null)
+        {
+            if (id.HasValue)
+            {
+                return await GetCountAsync(x => x.Id != id.Value && x.Title == questionTitle) > 0;
+            }
+            else
+            {
+                return await GetCountAsync(x => x.Title == questionTitle) > 0;
+            }
+        }
 
-	}
+    }
 }

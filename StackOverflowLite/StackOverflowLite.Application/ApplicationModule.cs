@@ -8,7 +8,7 @@ namespace StackOverflowLite.Application
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<QuestionManagementService>().As<IQuestionManagementService>()
+            builder.RegisterType<QuestionPostingService>().As<IQuestionPostingService>()
                 .InstancePerLifetimeScope();
         }
     }
