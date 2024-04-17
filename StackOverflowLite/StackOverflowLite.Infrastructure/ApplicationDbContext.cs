@@ -28,7 +28,7 @@ namespace StackOverflowLite.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
-               .HasKey(u => u.Id);
+                .HasKey(u => u.Id);
 
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Questions)
@@ -53,6 +53,18 @@ namespace StackOverflowLite.Infrastructure
 
             modelBuilder.Entity<Comment>()
                 .HasKey(c => c.Id);
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.User)
+                .WithMany(u => u.Comments)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.Question)
+                .WithMany(q => q.Comments)
+                .HasForeignKey(c => c.QuestionId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);
         }
