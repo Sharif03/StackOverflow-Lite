@@ -6,6 +6,28 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
+        // Check if the user is in the "Admin" role
+        //var isAdmin = User.IsInRole("Admin");
+
+        // Admin name hard coded
+        var user = User.Identity.Name;
+
+        if (user.Equals("admin@gmail.com"))
+        {
+            // Redirect to admin panel
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Question" asp-action="Create">Admin Panel</a>
+            </li>            
+        }
+        else
+        {
+            // Redirect to user panel
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Question" asp-action="Index">User Panel</a>
+            </li>
+        }
+
+         // Display user information and logout button
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Manage" title="Manage">Hello @User.Identity?.Name!</a>
         </li>
