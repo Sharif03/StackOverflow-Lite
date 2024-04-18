@@ -35,8 +35,8 @@ namespace StackOverflowLite.Application.Features.Posting.Services
                 Upvote = 0,
                 Downvote = 0,
                 QuestionPosted = DateTime.Now,
-                // UserId = Guid.NewGuid()
-			};
+                UserId = (Guid)userId
+            };
 			
 			await _applicationUnitOfWork.QuestionRepository.AddAsync(question);
             await _applicationUnitOfWork.SaveAsync();
