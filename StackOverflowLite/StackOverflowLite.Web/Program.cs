@@ -46,6 +46,7 @@ try
         options.UseSqlServer(connectionString, (m) => m.MigrationsAssembly(migrationAssembly)));
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
     builder.Services.AddIdentity();
+    builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
     builder.Services.AddControllersWithViews();
     builder.Services.AddCookieAuthentication();
     builder.Services.AddHttpContextAccessor();
