@@ -13,10 +13,13 @@ namespace StackOverflowLite.Infrastructure
 	public class ApplicationUnitOfWork : UnitOfWork, IApplicationUnitOfWork
 	{
 		public IQuestionRepository QuestionRepository { get; private set; }
-		public ApplicationUnitOfWork(IApplicationDbContext context, IQuestionRepository questionRepository) : base((DbContext)context)
+        public IUserRepository UserRepository { get; private set; }
+
+        public ApplicationUnitOfWork(IApplicationDbContext context, IQuestionRepository questionRepository, IUserRepository userRepository) : base((DbContext)context)
 		{
             QuestionRepository = questionRepository;
-		}
+            UserRepository = userRepository;
+        }
 
 	}
 }

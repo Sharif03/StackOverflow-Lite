@@ -33,6 +33,8 @@ namespace StackOverflowLite.Infrastructure
                 .InstancePerLifetimeScope();
             builder.RegisterType<HtmlEmailService>().As<IEmailService>()
                 .InstancePerLifetimeScope();
+            builder.RegisterType<UserRepository>().As<IUserRepository>()
+                .InstancePerLifetimeScope();
         }
     }
 }
