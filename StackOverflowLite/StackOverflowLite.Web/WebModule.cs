@@ -13,7 +13,7 @@ namespace StackOverflowLite.Web
             builder.RegisterType<RegistrationModel>().AsSelf();
             builder.RegisterType<LoginModel>().AsSelf();
             builder.RegisterType<QuestionCreateModel>().AsSelf();
-            builder.RegisterType<CurrentUserEmailService>().As<ICurrentUserEmailService>()
+            builder.RegisterType<UserIdentityService>().As<IUserIdentityService>()
                 .InstancePerLifetimeScope();
         }
     }

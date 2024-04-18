@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace StackOverflowLite.Application.Features.Posting.Services
 {
-    public interface ICurrentUserEmailService
+    public interface IUserIdentityService
     {
         Task<string> GetCurrentLoggedInUserEmailAsync();
+        Task<Guid?> GetCurrentLoggedInUserGuidAsync();
     }
 }

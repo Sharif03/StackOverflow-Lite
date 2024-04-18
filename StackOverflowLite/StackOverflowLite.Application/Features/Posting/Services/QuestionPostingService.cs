@@ -12,16 +12,16 @@ namespace StackOverflowLite.Application.Features.Posting.Services
     public class QuestionPostingService : IQuestionPostingService
     {
         private readonly IApplicationUnitOfWork _applicationUnitOfWork;
-        private readonly ICurrentUserEmailService _currentUserEmailService;
-        public QuestionPostingService(IApplicationUnitOfWork applicationUnitOfWork, ICurrentUserEmailService currentUserEmailService)
+        private readonly IUserIdentityService _userIdentityService;
+        public QuestionPostingService(IApplicationUnitOfWork applicationUnitOfWork, IUserIdentityService userIdentityService)
         {
             _applicationUnitOfWork = applicationUnitOfWork;
-            _currentUserEmailService = currentUserEmailService;
+            _userIdentityService = userIdentityService;
         }
 
         public async Task CreateQuestionAsync(string questionTitle, string questionContent, string questionTags)
         {
-            string userEmail = await _currentUserEmailService.GetCurrentLoggedInUserEmailAsync();
+            var userId = await _userIdentityService.GetCurrentLoggedInUserGuidAsync();
 
             bool isDuplicate = await _applicationUnitOfWork.QuestionRepository.IsTitleDuplicateAsync(questionTitle);
             if (isDuplicate)
