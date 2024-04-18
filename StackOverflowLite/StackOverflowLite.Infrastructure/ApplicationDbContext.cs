@@ -66,11 +66,26 @@ namespace StackOverflowLite.Infrastructure
                 .HasForeignKey(c => c.QuestionId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Answer>()
+                .HasOne(a => a.Question)
+                .WithMany(q => q.Answers)
+                .HasForeignKey(a => a.QuestionId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict); // Set to restrict delete
+
+            modelBuilder.Entity<Answer>()
+                .HasOne(a => a.User)
+                .WithMany()
+                .HasForeignKey(a => a.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict); // Set to restrict delete
+
             base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Answer> Answers { get; set; }
     }
 }

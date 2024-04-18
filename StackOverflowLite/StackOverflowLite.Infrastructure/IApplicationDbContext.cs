@@ -5,8 +5,9 @@ namespace StackOverflowLite.Infrastructure
 {
     public interface IApplicationDbContext
     {
-        public DbSet<User> Users { get; set; }
-        public DbSet<Question> Questions { get; set; }
-        public DbSet<Comment> Comments { get; set; }
+        DbSet<User> Users { get; set; }
+        DbSet<Question> Questions { get; set; }
+        DbSet<Answer> Answers { get; set; }
+        DbSet<Comment> Comments { get; set; }
     }
 }
