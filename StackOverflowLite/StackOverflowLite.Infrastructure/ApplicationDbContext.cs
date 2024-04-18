@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using StackOverflowLite.Domain.Entities;
 using StackOverflowLite.Infrastructure.Membership;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace StackOverflowLite.Infrastructure
 {
@@ -79,6 +80,13 @@ namespace StackOverflowLite.Infrastructure
                 .HasForeignKey(a => a.UserId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict); // Set to restrict delete
+
+            // Data seeding apply in Question Table
+            modelBuilder.Entity<Question>().HasData(new Question[]
+            {
+                new Question{ Id = new Guid("d788a40b-dc00-4869-856c-cf1a22156501"), Title = "Test Question-1", Content = "Test Content-1", Tags = "Test1", Upvote = 0, Downvote = 0, QuestionPosted = DateTime.Now, UserId = new Guid("0580A986-7DBE-483A-6B67-08DC56E3BD5B") },
+                new Question{ Id = new Guid("83e3f4b8-cfc7-4fde-82e5-f86a80318ba8"), Title = "Test Question-2", Content = "Test Content-2", Tags = "Test2", Upvote = 0, Downvote = 0, QuestionPosted = DateTime.Now, UserId = new Guid("0580A986-7DBE-483A-6B67-08DC56E3BD5B") }
+            });
 
             base.OnModelCreating(modelBuilder);
         }
