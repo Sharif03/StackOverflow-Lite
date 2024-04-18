@@ -48,6 +48,7 @@ try
     builder.Services.AddIdentity();
     builder.Services.AddControllersWithViews();
     builder.Services.AddCookieAuthentication();
+    builder.Services.AddHttpContextAccessor();
 
     builder.Services.Configure<Smtp>(builder.Configuration.GetSection("Smtp"));
 
