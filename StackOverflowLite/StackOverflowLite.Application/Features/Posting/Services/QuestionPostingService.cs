@@ -22,10 +22,17 @@ namespace StackOverflowLite.Application.Features.Posting.Services
         public async Task CreateQuestionAsync(string questionTitle, string questionContent, string questionTags)
         {
             var userId = await _userIdentityService.GetCurrentLoggedInUserGuidAsync();
+            if (userId == null)
+            { 
+                throw new GUIDNullValueException();
+            }
 
             bool isDuplicate = await _applicationUnitOfWork.QuestionRepository.IsTitleDuplicateAsync(questionTitle);
             if (isDuplicate)
+            {
                 throw new DuplicateTitleException();
+            }
+
             var question = new Question
             {
                 Id = Guid.NewGuid(),
