@@ -48,7 +48,14 @@ namespace StackOverflowLite.Application.Tests
         {
             // Arrange
             var userId = Guid.NewGuid(); // Mocked user ID
-            _userIdentityServiceMock.Setup(svc => svc.GetCurrentLoggedInUserGuidAsync()).ReturnsAsync(userId);
+            const string title = "Java";
+
+            // GetCurrentLoggedInUserGuidAsync()
+            _userIdentityServiceMock.Setup(svc => svc.GetCurrentLoggedInUserGuidAsync()).ReturnsAsync(userId).Verifiable();
+
+            // IsTitleDuplicateAsync() resolve 
+            _unitOfWorkMock.SetupGet(x => x.QuestionRepository).Returns(_questionRepositoryMock.Object).Verifiable();
+            _questionRepositoryMock.Setup(x => x.IsTitleDuplicateAsync(title, null)).ReturnsAsync(false).Verifiable();
 
             // Act
             await _questionPostingService.CreateQuestionAsync("Title", "Content", "Tags");
