@@ -113,9 +113,32 @@ namespace StackOverflowLite.Application.Tests
             _userIdentityServiceMock.VerifyAll();
         }
         [Test]
-        public void CreateQuestionAsync_TitleDuplicate_ThrowNewException()
+        public async Task CreateQuestionAsync_TitleDuplicate_ThrowNewExceptionAsync()
         {
-            Assert.Pass();
+            // Arrange
+            var userId = Guid.NewGuid(); // Mocked user ID
+            const string title = "Java";
+            const string content = "Java Problem";
+            const string tags = "Java, SE";
+
+            var question = new Question
+            {
+                Title = title,
+                Content = content,
+                Tags = tags,
+            };
+
+            // GetCurrentLoggedInUserGuidAsync() resolve 
+            _userIdentityServiceMock.Setup(svc => svc.GetCurrentLoggedInUserGuidAsync()).ReturnsAsync(userId).Verifiable();
+
+            // IsTitleDuplicateAsync() resolve 
+            _unitOfWorkMock.SetupGet(x => x.QuestionRepository).Returns(_questionRepositoryMock.Object).Verifiable();
+            _questionRepositoryMock.Setup(x => x.IsTitleDuplicateAsync(title, null)).ReturnsAsync(true).Verifiable();
+
+            // Act && Assert
+            await Should.ThrowAsync<DuplicateTitleException>(async
+                () => await _questionPostingService.CreateQuestionAsync(title, content, tags)
+            );
         }
     }
 }
