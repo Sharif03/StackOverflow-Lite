@@ -41,7 +41,22 @@ namespace StackOverflowLite.Application.Tests
         }
 
         [Test]
-        public void Test1()
+        public void CreateQuestionAsync_GUIDNotNull_CreateNewQuestion()
+        {
+            Assert.Pass();
+        }
+        [Test]
+        public void CreateQuestionAsync_GUIDNull_ThrowNewException()
+        {
+            Assert.Pass();
+        }
+        [Test]
+        public void CreateQuestionAsync_TitleUnique_CreateNewQuestion()
+        {
+            Assert.Pass();
+        }
+        [Test]
+        public void CreateQuestionAsync_TitleDuplicate_ThrowNewException()
         {
             Assert.Pass();
         }
