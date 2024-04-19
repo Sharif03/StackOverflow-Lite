@@ -1,6 +1,9 @@
 using Autofac.Extras.Moq;
 using Moq;
+using Shouldly;
 using StackOverflowLite.Application.Features.Posting.Services;
+using StackOverflowLite.Domain.Entities;
+using StackOverflowLite.Domain.Exceptions;
 using StackOverflowLite.Domain.Repositories;
 
 namespace StackOverflowLite.Application.Tests
@@ -41,17 +44,33 @@ namespace StackOverflowLite.Application.Tests
         }
 
         [Test]
-        public void CreateQuestionAsync_GUIDNotNull_CreateNewQuestion()
+        public async Task CreateQuestionAsync_GUIDNotNull_CreateNewQuestionAsync()
         {
-            Assert.Pass();
+            // Arrange
+            var userId = Guid.NewGuid(); // Mocked user ID
+            _userIdentityServiceMock.Setup(svc => svc.GetCurrentLoggedInUserGuidAsync()).ReturnsAsync(userId);
+
+            // Act
+            await _questionPostingService.CreateQuestionAsync("Title", "Content", "Tags");
+
+            // Assert
+            _questionRepositoryMock.Verify(repo => repo.AddAsync(It.IsAny<Question>()), Times.Once);
+            _unitOfWorkMock.Verify(uow => uow.SaveAsync(), Times.Once);
         }
         [Test]
-        public void CreateQuestionAsync_GUIDNull_ThrowNewException()
+        public async Task CreateQuestionAsync_GUIDNull_ThrowNewExceptionAsync()
         {
-            Assert.Pass();
+            // Arrange
+            _userIdentityServiceMock.Setup(svc => svc.GetCurrentLoggedInUserGuidAsync()).ReturnsAsync((Guid?)null);
+
+            // Act & Assert
+            await Should.ThrowAsync<GUIDNullValueException>(async () =>
+            {
+                await _questionPostingService.CreateQuestionAsync("Title", "Content", "Tags");
+            });
         }
         [Test]
-        public void CreateQuestionAsync_TitleUnique_CreateNewQuestion()
+        public async Task CreateQuestionAsync_TitleUnique_CreateNewQuestion()
         {
             Assert.Pass();
         }
