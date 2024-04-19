@@ -55,7 +55,7 @@ namespace StackOverflowLite.Web.Areas.Admin.Controllers
                     _logger.LogError(ex, "Server Error");
                     TempData.Put("ResponseMessage", new ResponseModel
                     {
-                        Message = "There was a problem in creating question",
+                        Message = "Question creation failed. Title is duplicate",
                         Type = ResponseTypes.Danger
                     });
                 }
