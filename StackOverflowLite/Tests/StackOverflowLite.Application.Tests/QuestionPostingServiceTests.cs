@@ -72,7 +72,33 @@ namespace StackOverflowLite.Application.Tests
         [Test]
         public async Task CreateQuestionAsync_TitleUnique_CreateNewQuestion()
         {
-            Assert.Pass();
+            // Arrange
+            const string title = "Java";
+            const string content = "Java Problem";
+            const string tags = "Java, SE";
+
+            var question = new Question
+            {
+                Title = title,
+                Content = content,
+                Tags = tags,
+            };
+
+            // Is IsTitleDuplicateAsync() resolve 
+            _unitOfWorkMock.SetupGet(x => x.QuestionRepository).Returns(_questionRepositoryMock.Object).Verifiable();
+            _questionRepositoryMock.Setup(x => x.IsTitleDuplicateAsync(title, null)).ReturnsAsync(false).Verifiable();
+
+            // AddAsync(question) & SaveAsync() resolve
+            _questionRepositoryMock.Setup(x => x.AddAsync(It.Is<Question>(y => y.Title == title
+                && y.Content == content && y.Tags == tags))).Returns(Task.CompletedTask).Verifiable();
+            _unitOfWorkMock.Setup(x => x.SaveAsync()).Returns(Task.CompletedTask).Verifiable();
+
+            // Act
+            await _questionPostingService.CreateQuestionAsync(title, content, tags);
+
+            // Assert
+            _unitOfWorkMock.VerifyAll();
+            _questionRepositoryMock.VerifyAll();
         }
         [Test]
         public void CreateQuestionAsync_TitleDuplicate_ThrowNewException()
