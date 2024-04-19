@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Markdig;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StackOverflowLite.Domain.Exceptions;
@@ -40,6 +41,17 @@ namespace StackOverflowLite.Web.Areas.Admin.Controllers
                 try
                 {
                     model.Resolve(_scope);
+
+                    // Get markdown-formatted text from the model
+                    string markdownText = model.Content;
+
+                    // Parse markdown text to HTML using Markdig
+                    string htmlContent = Markdown.ToHtml(markdownText);
+
+                    // Set the HTML content in the model
+                    model.Content = htmlContent;
+
+                    // Create the question asynchronously
                     await model.CreateQuestionAsync();
 
                     TempData.Put("ResponseMessage", new ResponseModel
