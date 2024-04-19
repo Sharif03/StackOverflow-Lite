@@ -73,6 +73,7 @@ namespace StackOverflowLite.Application.Tests
         public async Task CreateQuestionAsync_TitleUnique_CreateNewQuestion()
         {
             // Arrange
+            var userId = Guid.NewGuid(); // Mocked user ID
             const string title = "Java";
             const string content = "Java Problem";
             const string tags = "Java, SE";
@@ -84,13 +85,16 @@ namespace StackOverflowLite.Application.Tests
                 Tags = tags,
             };
 
-            // Is IsTitleDuplicateAsync() resolve 
+            // GetCurrentLoggedInUserGuidAsync() resolve 
+            _userIdentityServiceMock.Setup(svc => svc.GetCurrentLoggedInUserGuidAsync()).ReturnsAsync(userId).Verifiable();
+
+            // IsTitleDuplicateAsync() resolve 
             _unitOfWorkMock.SetupGet(x => x.QuestionRepository).Returns(_questionRepositoryMock.Object).Verifiable();
             _questionRepositoryMock.Setup(x => x.IsTitleDuplicateAsync(title, null)).ReturnsAsync(false).Verifiable();
 
             // AddAsync(question) & SaveAsync() resolve
-            _questionRepositoryMock.Setup(x => x.AddAsync(It.Is<Question>(y => y.Title == title
-                && y.Content == content && y.Tags == tags))).Returns(Task.CompletedTask).Verifiable();
+            _questionRepositoryMock.Setup(x => x.AddAsync(It.Is<Question>(y => y.Title == title && y.Content == content 
+                && y.Tags == tags))).Returns(Task.CompletedTask).Verifiable();
             _unitOfWorkMock.Setup(x => x.SaveAsync()).Returns(Task.CompletedTask).Verifiable();
 
             // Act
@@ -99,6 +103,7 @@ namespace StackOverflowLite.Application.Tests
             // Assert
             _unitOfWorkMock.VerifyAll();
             _questionRepositoryMock.VerifyAll();
+            _userIdentityServiceMock.VerifyAll();
         }
         [Test]
         public void CreateQuestionAsync_TitleDuplicate_ThrowNewException()
