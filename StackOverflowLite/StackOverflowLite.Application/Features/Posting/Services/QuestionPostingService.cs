@@ -21,6 +21,7 @@ namespace StackOverflowLite.Application.Features.Posting.Services
 
         public async Task CreateQuestionAsync(string questionTitle, string questionContent, string questionTags)
         {
+            // User GUID id retrieve from database
             var userId = await _userIdentityService.GetCurrentLoggedInUserGuidAsync();
             if (userId == null)
             { 
