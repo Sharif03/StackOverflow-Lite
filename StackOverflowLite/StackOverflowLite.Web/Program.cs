@@ -13,20 +13,34 @@ using System.Reflection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using StackOverflowLite.Infrastructure.Email;
 using Amazon.SQS;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using System.Configuration;
 
-var builder = WebApplication.CreateBuilder(args);
 
-//Serilog setup
-builder.Host.UseSerilog((ctx, lc) => lc
-    .MinimumLevel.Debug()
-    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-    .Enrich.FromLogContext()
-    .ReadFrom.Configuration(builder.Configuration));
+var configuration = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json")
+    .Build();
+
+Log.Logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(configuration)
+            .CreateBootstrapLogger();
 
 try
 {
+    Log.Information("Application Starting...");
+    var builder = WebApplication.CreateBuilder(args);
+
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
     var migrationAssembly = Assembly.GetExecutingAssembly().FullName;
+    // Log.Information("Connection String:" + connectionString);
+
+    //Serilog setup
+    builder.Host.UseSerilog((ctx, lc) => lc
+        .MinimumLevel.Debug()
+        .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+        .Enrich.FromLogContext()
+        .ReadFrom.Configuration(builder.Configuration));
 
     //Autofac Setup
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -52,6 +66,7 @@ try
     builder.Services.AddHttpContextAccessor();
 
     builder.Services.Configure<Smtp>(builder.Configuration.GetSection("Smtp"));
+    builder.Services.Configure<KestrelServerOptions>(builder.Configuration.GetSection("Kestrel"));
 
     var app = builder.Build();
 
@@ -83,7 +98,6 @@ try
         pattern: "{controller=Home}/{action=Index}/{id?}");
     app.MapRazorPages();
 
-    Log.Information("Application Starting...");
     app.Run();
 }
 catch (Exception ex)
