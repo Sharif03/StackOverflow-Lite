@@ -1,0 +1,17 @@
+version: "3"
+services:
+    web:
+        build:
+            context: .
+            dockerfile: StackOverflowLite.Web/Dockerfile
+        image: sharif03/stackoverflowlite.web
+        env_file:
+            - StackOverflowLite.Web/web.env
+        volumes:
+            - stackoverflowlite-data:/app/Logs
+        ports:
+            - "8000:80"
+        entrypoint: [ "dotnet", "StackOverflowLite.Web.dll" ]
+volumes:
+    stackoverflowlite-data:
+    external: true
