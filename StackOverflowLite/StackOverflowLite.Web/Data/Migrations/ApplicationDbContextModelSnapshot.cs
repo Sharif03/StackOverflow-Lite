@@ -53,7 +53,7 @@ namespace StackOverflowLite.Web.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Answers");
+                    b.ToTable("Answers", (string)null);
                 });
 
             modelBuilder.Entity("StackOverflowLite.Domain.Entities.Comment", b =>
@@ -81,7 +81,7 @@ namespace StackOverflowLite.Web.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("StackOverflowLite.Domain.Entities.Question", b =>
@@ -118,7 +118,7 @@ namespace StackOverflowLite.Web.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Questions");
+                    b.ToTable("Questions", (string)null);
 
                     b.HasData(
                         new
@@ -163,7 +163,7 @@ namespace StackOverflowLite.Web.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("StackOverflowLite.Infrastructure.Membership.ApplicationRole", b =>
