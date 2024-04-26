@@ -33,8 +33,10 @@ namespace StackOverflowLite.Infrastructure
             base.OnModelCreating(modelBuilder);
         }
 
-     
-
+        public DbSet<User> Users { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Answer> Answers { get; set; }
+        public DbSet<QuestionComment> QuestionComments { get; set; }
+        public DbSet<AnswerComment> AnswerComments { get; set; }
     }
-
 }
