@@ -42,6 +42,7 @@ namespace StackOverflowLite.Application.Features.Posting.Services
                 Tags = questionTags,
                 Upvote = 0,
                 Downvote = 0,
+                VoteCount = 0,
                 QuestionPosted = DateTime.Now,
                 UserId = (Guid)userId
             };
