@@ -19,6 +19,8 @@ namespace StackOverflowLite.Domain.Entities
         public bool IsVerified { get; set; }
         public Level UserLevel { get; set; }
         public IList<Question> Questions { get; set; }
-        public IList<Comment> Comments { get; set; }
+        public IList<QuestionComment> QuestionComments { get; set; }
+        public IList<Answer> Answers { get; set; }
+        public IList<AnswerComment> AnswerComments { get; set; }
     }
 }
