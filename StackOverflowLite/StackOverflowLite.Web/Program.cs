@@ -35,14 +35,14 @@ try
     var migrationAssembly = Assembly.GetExecutingAssembly().FullName;
     // Log.Information("Connection String:" + connectionString);
 
-    //Serilog setup
+    //Serilog(Error logger) setup
     builder.Host.UseSerilog((ctx, lc) => lc
         .MinimumLevel.Debug()
         .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
         .Enrich.FromLogContext()
         .ReadFrom.Configuration(builder.Configuration));
 
-    //Autofac Setup
+    //Autofac(Dependence Injection) Setup
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
     builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
     {
