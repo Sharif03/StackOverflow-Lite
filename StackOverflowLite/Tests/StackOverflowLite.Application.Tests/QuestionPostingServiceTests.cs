@@ -108,18 +108,20 @@ namespace StackOverflowLite.Application.Tests
             await _questionPostingService.CreateQuestionAsync(title, content, tags);
 
             // Assert
-            _unitOfWorkMock.VerifyAll();
-            _questionRepositoryMock.VerifyAll();
-            _userIdentityServiceMock.VerifyAll();
+            this.ShouldSatisfyAllConditions(
+                () => _unitOfWorkMock.VerifyAll(),
+                () => _questionRepositoryMock.VerifyAll(),
+                () => _userIdentityServiceMock.VerifyAll()
+            );
         }
         [Test]
         public async Task CreateQuestionAsync_TitleDuplicate_ThrowNewExceptionAsync()
         {
             // Arrange
             var userId = Guid.NewGuid(); // Mocked user ID
-            const string title = "Java";
-            const string content = "Java Problem";
-            const string tags = "Java, SE";
+            const string title = "C#";
+            const string content = "C# Problem";
+            const string tags = "C#, Software Engineering";
 
             var question = new Question
             {
