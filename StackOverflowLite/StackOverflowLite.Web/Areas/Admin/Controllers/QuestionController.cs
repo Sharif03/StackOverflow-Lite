@@ -25,6 +25,15 @@ namespace StackOverflowLite.Web.Areas.Admin.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public async Task<JsonResult> GetQuestions(QuestionListModel model)
+        {
+            var dataTablesModel = new DataTablesAjaxRequestUtility(Request);
+            model.Resolve(_scope);
+
+            var data = await model.GetPagedCoursesAsync(dataTablesModel);
+            return Json(data);
+        }
 
         [HttpGet]
         public IActionResult Create()
