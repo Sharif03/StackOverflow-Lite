@@ -166,5 +166,41 @@ namespace StackOverflowLite.Application.Tests
             Assert.AreEqual(expectedTotal, result.total);
             Assert.AreEqual(expectedTotalDisplay, result.totalDisplay);
         }
+
+        [Test]
+        public async Task GetQuestionAsync_WithValidId_ReturnsQuestion()
+        {
+            // Arrange
+            var id = Guid.NewGuid();
+            var expectedQuestion = new Question
+            {
+                Id = id,
+            };
+
+            _unitOfWorkMock.SetupGet(x => x.QuestionRepository).Returns(_questionRepositoryMock.Object).Verifiable();
+            _questionRepositoryMock.Setup(repo => repo.GetByIdAsync(id)).ReturnsAsync(expectedQuestion).Verifiable();
+
+            // Act
+            var result = await _questionPostingService.GetQuestionAsync(id);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.AreEqual(expectedQuestion.Id, result.Id);
+        }
+        [Test]
+        public async Task GetQuestionAsync_WithInvalidId_ReturnsNull()
+        {
+            // Arrange
+            var invalidId = Guid.NewGuid();
+
+            _unitOfWorkMock.SetupGet(x => x.QuestionRepository).Returns(_questionRepositoryMock.Object).Verifiable();
+            _questionRepositoryMock.Setup(repo => repo.GetByIdAsync(invalidId)).ReturnsAsync((Question)null).Verifiable();
+
+            // Act
+            var result = await _questionPostingService.GetQuestionAsync(invalidId);
+
+            // Assert
+            Assert.Null(result);
+        }
     }
 }
