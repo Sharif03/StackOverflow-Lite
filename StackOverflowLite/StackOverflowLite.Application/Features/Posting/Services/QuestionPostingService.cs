@@ -55,5 +55,10 @@ namespace StackOverflowLite.Application.Features.Posting.Services
         {
             return await _applicationUnitOfWork.QuestionRepository.GetTableDataAsync(searchText, sortBy, pageIndex, pageSize);
         }
+
+        public async Task<Question> GetQuestionAsync(Guid id)
+        {
+            return await _applicationUnitOfWork.QuestionRepository.GetByIdAsync(id);
+        }
     }
 }

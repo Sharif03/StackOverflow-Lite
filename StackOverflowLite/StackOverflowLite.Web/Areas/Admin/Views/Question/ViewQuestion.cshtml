@@ -1,0 +1,16 @@
+﻿@model QuestionViewModel
+@using System.Web
+
+@{
+    ViewData["Title"] = "Question Details";
+}
+
+<div class="container">
+    <h1>@Model.Title</h1>
+    <p><strong>Content:</strong> @Html.Raw(Model.Content)</p>
+    <p><strong>Tags:</strong> @Model.Tags</p>
+    <p><strong>Upvote:</strong> @Model.Upvote</p>
+    <p><strong>Downvote:</strong> @Model.Downvote</p>
+    <p><strong>Total Votes:</strong> @Model.VoteCount</p>
+    <p><strong>Question Posted:</strong> @Model.QuestionPosted.ToString("yyyy-MM-dd HH:mm:ss")</p>
+</div>

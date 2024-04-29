@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using StackOverflowLite.Domain.Entities;
+using StackOverflowLite.Web.Areas.Admin.Models;
 
 namespace StackOverflowLite.Web
 {
@@ -6,7 +8,7 @@ namespace StackOverflowLite.Web
     {
         public WebProfile()
         {
-            // CreateMap<QuestionUpdateModel, Question>().ReverseMap();
+            CreateMap<QuestionViewModel, Question>().ReverseMap();
         }
     }
 }

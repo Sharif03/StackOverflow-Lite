@@ -36,7 +36,15 @@ namespace StackOverflowLite.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> ViewQuestion(Guid id)
+        {
+            var model = _scope.Resolve<QuestionViewModel>();
+            await model.LoadAsync(id);
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Create()
         {
             var model = _scope.Resolve<QuestionCreateModel>();
             return View(model);
