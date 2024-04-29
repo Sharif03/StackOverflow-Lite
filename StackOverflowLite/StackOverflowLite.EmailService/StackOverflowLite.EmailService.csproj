@@ -17,4 +17,8 @@
 	<PackageReference Include="Serilog.Settings.Configuration" Version="7.0.1" />
 	<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StackOverflowLite.Infrastructure\StackOverflowLite.Infrastructure.csproj" />
+  </ItemGroup>
 </Project>
