@@ -15,16 +15,12 @@ namespace StackOverflowLite.Web.Controllers
         private readonly ILifetimeScope _scope;
         private readonly ILogger<AccountController> _logger;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IAmazonSQS _sqsClient;
-        private readonly string _queueUrl;
 
         public AccountController(ILifetimeScope scope, ILogger<AccountController> logger, SignInManager<ApplicationUser> signInManager, IAmazonSQS sqsClient)
         {
             _scope = scope;
             _logger = logger;
             _signInManager = signInManager;
-            _sqsClient = sqsClient;
-            _queueUrl = "https://sqs.us-east-1.amazonaws.com/590184136362/StackOverflowLiteQueue"; // SQS queue URL
         }
 
         public IActionResult Register()
@@ -51,15 +47,6 @@ namespace StackOverflowLite.Web.Controllers
                 }
                 else
                 {
-                    // Send email verification message to SQS queue
-                    var messageBody = JsonConvert.SerializeObject(new { email = model.Email, confirmationLink = response.redirectLocation });
-                    var request = new SendMessageRequest
-                    {
-                        QueueUrl = _queueUrl,
-                        MessageBody = messageBody
-                    };
-                    await _sqsClient.SendMessageAsync(request);
-
                     return Redirect(response.redirectLocation);
                 }
             }

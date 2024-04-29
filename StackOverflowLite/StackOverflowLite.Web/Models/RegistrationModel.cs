@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using Amazon.SQS.Model;
+using Amazon.SQS;
+using Autofac;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using StackOverflowLite.Application.Utilities;
@@ -14,6 +16,8 @@ namespace StackOverflowLite.Web.Models
         private ILifetimeScope _scope;
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
+        private readonly IAmazonSQS _sqsClient;
+        private readonly string _queueUrl;
         private IEmailService _emailService;
 
         [Required]
@@ -42,10 +46,12 @@ namespace StackOverflowLite.Web.Models
         public string? ReturnUrl { get; set; }
 
         public RegistrationModel() { }
-        public RegistrationModel(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailService emailService)
+        public RegistrationModel(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IAmazonSQS sqsClient, IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _sqsClient = sqsClient;
+            _queueUrl = "https://sqs.us-east-1.amazonaws.com/590184136362/StackOverflowLiteQueue"; // SQS queue URL
             _emailService = emailService;
         }
         internal void Resolve(ILifetimeScope scope)
@@ -54,6 +60,12 @@ namespace StackOverflowLite.Web.Models
             _userManager = _scope.Resolve<UserManager<ApplicationUser>>();
             _signInManager = _scope.Resolve<SignInManager<ApplicationUser>>();
             _emailService = _scope.Resolve<IEmailService>();
+        }
+        private async Task SendMessageToSQS(IAmazonSQS sqsClient, string qUrl, string messageBody)
+        {
+            sqsClient = new AmazonSQSClient();
+            qUrl = "https://sqs.us-east-1.amazonaws.com/590184136362/StackOverflowLiteQueue";
+            SendMessageResponse responseSendMsg = await sqsClient.SendMessageAsync(qUrl, messageBody);
         }
 
         internal async Task<(IEnumerable<IdentityError>? errors, string? redirectLocation)> RegisterAsync(string urlPrefix)
@@ -67,9 +79,11 @@ namespace StackOverflowLite.Web.Models
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 var callbackUrl = $"{urlPrefix}/Account/ConfirmEmail?userId={user.Id}&code={code}&returnUrl={ReturnUrl}";
+                var mesageBody = $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.";
 
-                _emailService.SendSingleEmail(FirstName + " " + LastName, Email, "Confirm your email",
-                                   $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                await SendMessageToSQS(_sqsClient, _queueUrl, mesageBody);
+
+                _emailService.SendSingleEmail(FirstName + " " + LastName, Email, "Confirm your email", mesageBody);
 
                 if (_userManager.Options.SignIn.RequireConfirmedAccount)
                 {
