@@ -29,5 +29,10 @@ namespace StackOverflowLite.Infrastructure.Repositories
             }
         }
 
+        public async Task<(IList<Question> records, int total, int totalDisplay)>GetTableDataAsync(string sortBy, int pageIndex, int pageSize)
+        {
+            Expression<Func<Question, bool>> expression = null;
+            return await GetDynamicAsync(expression, sortBy, null, pageIndex, pageSize, true);
+        }
     }
 }
