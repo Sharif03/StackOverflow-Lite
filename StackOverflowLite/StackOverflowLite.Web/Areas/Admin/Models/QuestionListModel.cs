@@ -29,7 +29,7 @@ namespace StackOverflowLite.Web.Areas.Admin.Models
         }
         public async Task<object> GetPagedCoursesAsync(DataTablesAjaxRequestUtility dataTablesUtility)
         {
-            var data = await _questionPostingService.GetPagedCoursesAsync(
+            var data = await _questionPostingService.GetPagedQuestionsAsync(
                 dataTablesUtility.SearchText,
                 dataTablesUtility.GetSortText(new string[] { "Title", "Content", "Tags" }),
                 dataTablesUtility.PageIndex,

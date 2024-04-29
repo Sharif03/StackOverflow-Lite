@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\StackOverflowLite.Application\StackOverflowLite.Application.csproj" />
+    <ProjectReference Include="..\..\StackOverflowLite.Web\StackOverflowLite.Web.csproj" />
   </ItemGroup>
 
 </Project>

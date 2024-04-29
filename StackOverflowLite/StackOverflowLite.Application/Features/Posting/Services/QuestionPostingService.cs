@@ -51,7 +51,7 @@ namespace StackOverflowLite.Application.Features.Posting.Services
             await _applicationUnitOfWork.SaveAsync();
         }
 
-        public async Task<(IList<Question> records, int total, int totalDisplay)>GetPagedCoursesAsync(string searchText, string sortBy, int pageIndex, int pageSize)
+        public async Task<(IList<Question> records, int total, int totalDisplay)>GetPagedQuestionsAsync(string searchText, string sortBy, int pageIndex, int pageSize)
         {
             return await _applicationUnitOfWork.QuestionRepository.GetTableDataAsync(searchText, sortBy, pageIndex, pageSize);
         }

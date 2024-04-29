@@ -15,7 +15,7 @@ namespace StackOverflowLite.Application.Tests
         private Mock<IApplicationUnitOfWork> _unitOfWorkMock;
         private Mock<IUserIdentityService> _userIdentityServiceMock;
         private QuestionPostingService _questionPostingService;
-  
+
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
@@ -139,6 +139,30 @@ namespace StackOverflowLite.Application.Tests
             await Should.ThrowAsync<DuplicateTitleException>(async
                 () => await _questionPostingService.CreateQuestionAsync(title, content, tags)
             );
+        }
+
+        [Test]
+        public async Task GetPagedCoursesAsync_ReturnsData()
+        {
+            // Arrange
+            string searchText = "C#";
+            string sortBy = "Title";
+            int pageIndex = 1;
+            int pageSize = 10;
+            var expectedRecords = new List<Question> { /* Your expected list of Question objects */ };
+            var expectedTotal = expectedRecords.Count;
+            var expectedTotalDisplay = expectedRecords.Count; // Assuming same as total for simplicity
+
+            _unitOfWorkMock.Setup(uow => uow.QuestionRepository.GetTableDataAsync(searchText, sortBy, pageIndex, pageSize))
+                           .ReturnsAsync((expectedRecords, expectedTotal, expectedTotalDisplay)).Verifiable();
+
+            // Act
+            var result = await _questionPostingService.GetPagedQuestionsAsync(searchText, sortBy, pageIndex, pageSize);
+
+            // Assert
+            Assert.AreEqual(expectedRecords, result.records);
+            Assert.AreEqual(expectedTotal, result.total);
+            Assert.AreEqual(expectedTotalDisplay, result.totalDisplay);
         }
     }
 }
