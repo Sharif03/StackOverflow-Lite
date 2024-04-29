@@ -1,7 +1,9 @@
 ﻿using Autofac;
 using MailKit.Search;
 using StackOverflowLite.Application.Features.Posting.Services;
+using StackOverflowLite.Domain.Entities;
 using StackOverflowLite.Infrastructure;
+using System.ComponentModel.DataAnnotations;
 using System.Web;
 
 namespace StackOverflowLite.Web.Areas.Admin.Models
@@ -10,7 +12,6 @@ namespace StackOverflowLite.Web.Areas.Admin.Models
     {
         private ILifetimeScope _scope;
         private IQuestionPostingService _questionPostingService;
-
 
         public QuestionListModel()
         {
@@ -29,7 +30,7 @@ namespace StackOverflowLite.Web.Areas.Admin.Models
         public async Task<object> GetPagedCoursesAsync(DataTablesAjaxRequestUtility dataTablesUtility)
         {
             var data = await _questionPostingService.GetPagedCoursesAsync(
-                dataTablesUtility.GetSortText(new string[] { "Title", "Tags" }),
+                dataTablesUtility.GetSortText(new string[] { "Title", "Content", "Tags" }),
                 dataTablesUtility.PageIndex,
                 dataTablesUtility.PageSize);
 
@@ -41,6 +42,7 @@ namespace StackOverflowLite.Web.Areas.Admin.Models
                         select new string[]
                         {
                                 HttpUtility.HtmlEncode(record.Title),
+                                HttpUtility.HtmlEncode(record.Content),
                                 HttpUtility.HtmlEncode(record.Tags),
                                 record.Id.ToString()
                         }
