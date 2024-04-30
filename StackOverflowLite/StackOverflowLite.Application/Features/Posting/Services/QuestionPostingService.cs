@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Identity;
 using StackOverflowLite.Domain;
 using StackOverflowLite.Domain.Entities;
 using StackOverflowLite.Domain.Exceptions;
-using Markdig;
 
 namespace StackOverflowLite.Application.Features.Posting.Services
 {
