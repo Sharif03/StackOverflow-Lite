@@ -1,3 +1,4 @@
+using Autofac.Core;
 using Autofac.Extras.Moq;
 using Moq;
 using Shouldly;
@@ -48,7 +49,7 @@ namespace StackOverflowLite.Application.Tests
         {
             // Arrange
             var userId = Guid.NewGuid(); // Mocked user ID
-            const string title = "Java";
+            const string title = "C#";
 
             // GetCurrentLoggedInUserGuidAsync()
             _userIdentityServiceMock.Setup(svc => svc.GetCurrentLoggedInUserGuidAsync()).ReturnsAsync(userId).Verifiable();
@@ -81,9 +82,9 @@ namespace StackOverflowLite.Application.Tests
         {
             // Arrange
             var userId = Guid.NewGuid(); // Mocked user ID
-            const string title = "Java";
-            const string content = "Java Problem";
-            const string tags = "Java, SE";
+            const string title = "C#";
+            const string content = "C# Problem";
+            const string tags = "C#, SE";
 
             var question = new Question
             {
@@ -201,6 +202,88 @@ namespace StackOverflowLite.Application.Tests
 
             // Assert
             Assert.Null(result);
+        }
+
+        [Test]
+        public async Task UpdateQuestionAsync_ValidInput_NoDuplicateTitle()
+        {
+            // Arrange
+            Guid id = Guid.NewGuid();
+            const string title = "C#";
+            const string content = "C# Problem";
+            const string tags = "C#, SE";
+            var question = new Question
+            {
+                Title = title,
+                Content = content,
+                Tags = tags,
+            };
+
+            // Mocking IsTitleDuplicateAsync to return false (no duplicate title)
+            _unitOfWorkMock.SetupGet(x => x.QuestionRepository).Returns(_questionRepositoryMock.Object).Verifiable();
+            _questionRepositoryMock.Setup(x => x.IsTitleDuplicateAsync(title, id)).ReturnsAsync(false).Verifiable();
+
+            // Mocking GetQuestionAsync to return a question
+            Question existingQuestion = new Question { Id = id, Title = title, Content = content, Tags =tags};
+            _unitOfWorkMock.Setup(x => x.SaveAsync()).Returns(Task.CompletedTask).Verifiable();
+
+            // Act
+            await _questionPostingService.UpdateQuestionAsync(id, title, content, tags);
+
+            // Assert
+            // Check if the existing question's properties were updated correctly
+            Assert.AreEqual(id, existingQuestion.Id);
+            Assert.AreEqual(title, existingQuestion.Title);
+            Assert.AreEqual(content, existingQuestion.Content);
+            Assert.AreEqual(tags, existingQuestion.Tags);
+            _unitOfWorkMock.Verify(uow => uow.SaveAsync(), Times.Once);
+        }
+        [Test]
+        public async Task UpdateQuestionAsync_DuplicateTitle_ThrowsDuplicateTitleException()
+        {
+            // Arrange
+            var userId = Guid.NewGuid(); // Mocked user ID
+            const string title = "C#";
+            const string content = "C# Problem";
+            const string tags = "C#, Software Engineering";
+
+            var question = new Question
+            {
+                Title = title,
+                Content = content,
+                Tags = tags,
+            };
+
+            // GetCurrentLoggedInUserGuidAsync() resolve 
+            _userIdentityServiceMock.Setup(svc => svc.GetCurrentLoggedInUserGuidAsync()).ReturnsAsync(userId).Verifiable();
+
+            // IsTitleDuplicateAsync() resolve 
+            _unitOfWorkMock.SetupGet(x => x.QuestionRepository).Returns(_questionRepositoryMock.Object).Verifiable();
+            _questionRepositoryMock.Setup(x => x.IsTitleDuplicateAsync(title, null)).ReturnsAsync(true).Verifiable();
+
+            // Act && Assert
+            await Should.ThrowAsync<DuplicateTitleException>(async
+                () => await _questionPostingService.CreateQuestionAsync(title, content, tags)
+            );
+        }
+        [Test]
+        public async Task UpdateQuestionAsync_QuestionNotFound_DoesNotUpdateOrSave()
+        {
+            // Arrange
+            Guid id = Guid.NewGuid();
+            const string title = "C#";
+            const string content = "C# Problem";
+            const string tags = "C#, SE";
+
+            // Mocking IsTitleDuplicateAsync to return false (no duplicate title)
+            _unitOfWorkMock.SetupGet(x => x.QuestionRepository).Returns(_questionRepositoryMock.Object).Verifiable();
+            _questionRepositoryMock.Setup(x => x.IsTitleDuplicateAsync(title, id)).ReturnsAsync(false).Verifiable();
+
+            // Act
+            await _questionPostingService.UpdateQuestionAsync(id, title, content, tags);
+
+            // Assert
+            Assert.Pass();
         }
     }
 }
