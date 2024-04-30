@@ -285,5 +285,26 @@ namespace StackOverflowLite.Application.Tests
             // Assert
             Assert.Pass();
         }
+
+        [Test]
+        public async Task DeleteQuestionAsync_ValidId_DeletesQuestionAndSavesChanges()
+        {
+            // Arrange
+            Guid questionId = Guid.NewGuid();
+
+            // RemoveAsync(questionId) & SaveAsync() resolve
+            _unitOfWorkMock.SetupGet(x => x.QuestionRepository).Returns(_questionRepositoryMock.Object).Verifiable();
+            _questionRepositoryMock.Setup(x => x.RemoveAsync(questionId)).Returns(Task.CompletedTask).Verifiable();
+            _unitOfWorkMock.Setup(x => x.SaveAsync()).Returns(Task.CompletedTask).Verifiable();
+
+            // Act
+            await _questionPostingService.DeleteQuestionAsync(questionId);
+
+            // Assert
+            this.ShouldSatisfyAllConditions(
+                () => _questionRepositoryMock.VerifyAll(),
+                () => _unitOfWorkMock.VerifyAll()
+              );
+        }
     }
 }
