@@ -12,5 +12,6 @@ namespace StackOverflowLite.Application.Features.Posting.Services
         Task CreateQuestionAsync(string questionTitle, string questionContent, string questionTags);
         Task<(IList<Question> records, int total, int totalDisplay)>GetPagedQuestionsAsync(string searchText, string sortBy, int pageIndex, int pageSize);
         Task<Question> GetQuestionAsync(Guid id);
+        Task UpdateQuestionAsync(Guid id, string title, string content, string tags);
     }
 }

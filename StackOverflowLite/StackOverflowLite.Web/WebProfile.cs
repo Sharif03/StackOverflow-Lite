@@ -9,6 +9,7 @@ namespace StackOverflowLite.Web
         public WebProfile()
         {
             CreateMap<QuestionViewModel, Question>().ReverseMap();
+            CreateMap<QuestionUpdateModel, Question>().ReverseMap();
         }
     }
 }

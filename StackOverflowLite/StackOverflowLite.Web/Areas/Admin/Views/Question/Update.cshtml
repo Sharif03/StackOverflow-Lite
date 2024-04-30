@@ -1,0 +1,50 @@
+﻿@model QuestionUpdateModel
+@{
+    ViewData["Title"] = "Update";
+}
+<!-- Include SimpleMDE CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+
+<div class="col-md-12">
+    <!-- general form elements -->
+    <div class="card card-primary">
+        <partial name="_ResponsePartial" />
+        <div class="card-header">
+            <h3 class="card-title">Update Question</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form asp-action="Update" asp-controller="Question" asp-area="Admin" asp-antiforgery="true">
+            <div class="card-body">
+                <div class="form-group">
+                    <label asp-for="Title">Question title</label>
+                    <input type="text" class="form-control" asp-for="Title">
+                </div>
+                <div class="form-group">
+                    <label asp-for="Content">Question content</label>
+                    <textarea class="form-control markdown-editor" asp-for="Content"></textarea>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tags">Question required tags</label>
+                    <input type="text" class="form-control" asp-for="Tags">
+                </div>
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+    <!-- /.card -->
+</div>
+
+<!-- Include SimpleMDE JavaScript -->
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<script>
+    // Initialize SimpleMDE editor
+    var simplemde = new SimpleMDE({ element: document.querySelector('.markdown-editor') });
+</script>
+
+
+

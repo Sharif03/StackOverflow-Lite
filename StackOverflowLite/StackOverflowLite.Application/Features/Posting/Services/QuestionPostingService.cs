@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using StackOverflowLite.Domain;
 using StackOverflowLite.Domain.Entities;
 using StackOverflowLite.Domain.Exceptions;
+using Markdig;
 
 namespace StackOverflowLite.Application.Features.Posting.Services
 {
@@ -59,6 +60,23 @@ namespace StackOverflowLite.Application.Features.Posting.Services
         public async Task<Question> GetQuestionAsync(Guid id)
         {
             return await _applicationUnitOfWork.QuestionRepository.GetByIdAsync(id);
+        }
+
+        public async Task UpdateQuestionAsync(Guid id, string title, string content, string tags)
+        {
+            bool isDuplicatTitle = await _applicationUnitOfWork.QuestionRepository.IsTitleDuplicateAsync(title, id);
+
+            if (isDuplicatTitle)
+                throw new DuplicateTitleException();
+
+            var question = await GetQuestionAsync(id);
+            if (question is not null)
+            {
+                question.Title = title;
+                question.Content = content;
+                question.Tags = tags;
+            }
+            await _applicationUnitOfWork.SaveAsync();
         }
     }
 }

@@ -95,5 +95,52 @@ namespace StackOverflowLite.Web.Areas.Admin.Controllers
             }
             return View(model);
         }
+
+        public async Task<IActionResult> Update(Guid id)
+        {
+            var model = _scope.Resolve<QuestionUpdateModel>();
+            await model.LoadAsync(id);
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(QuestionUpdateModel model)
+        {
+            model.Resolve(_scope);
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await model.UpdateQuestionAsync();
+                    TempData.Put("ResponseMessage", new ResponseModel
+                    {
+                        Message = "Question updated successfully",
+                        Type = ResponseTypes.Success
+                    });
+
+                    return RedirectToAction("Index");
+                }
+                catch (DuplicateTitleException ex)
+                {
+                    TempData.Put("ResponseMessage", new ResponseModel
+                    {
+                        Message = ex.Message,
+                        Type = ResponseTypes.Danger
+                    });
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Server Error");
+
+                    TempData.Put("ResponseMessage", new ResponseModel
+                    {
+                        Message = "There was a problem in updating question",
+                        Type = ResponseTypes.Danger
+                    });
+                }
+            }
+
+            return View(model);
+        }
     }
 }
