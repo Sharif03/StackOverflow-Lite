@@ -50,5 +50,10 @@ namespace StackOverflowLite.Web.Areas.Admin.Models
                     ).ToArray()
             };
         }
+
+        internal async Task DeleteQuestionAsync(Guid id)
+        {
+            await _questionPostingService.DeleteQuestionAsync(id);
+        }
     }
 }

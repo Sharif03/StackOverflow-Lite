@@ -77,5 +77,10 @@ namespace StackOverflowLite.Application.Features.Posting.Services
             }
             await _applicationUnitOfWork.SaveAsync();
         }
+        public async Task DeleteQuestionAsync(Guid id)
+        {
+            await _applicationUnitOfWork.QuestionRepository.RemoveAsync(id);
+            await _applicationUnitOfWork.SaveAsync();
+        }
     }
 }

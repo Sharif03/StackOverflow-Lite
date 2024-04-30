@@ -142,5 +142,38 @@ namespace StackOverflowLite.Web.Areas.Admin.Controllers
 
             return View(model);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var model = _scope.Resolve<QuestionListModel>();
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await model.DeleteQuestionAsync(id); 
+                    TempData.Put("ResponseMessage", new ResponseModel
+                    {
+                        Message = "Course deleted successfully",
+                        Type = ResponseTypes.Success
+                    });
+
+                    return RedirectToAction("Index");
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(e, "Server Error");
+
+                    TempData.Put("ResponseMessage", new ResponseModel
+                    {
+                        Message = "There was a problem in deleting course",
+                        Type = ResponseTypes.Danger
+                    });
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }

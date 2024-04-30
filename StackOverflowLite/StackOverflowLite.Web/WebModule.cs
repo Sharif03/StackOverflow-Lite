@@ -13,6 +13,7 @@ namespace StackOverflowLite.Web
             builder.RegisterType<RegistrationModel>().AsSelf();
             builder.RegisterType<LoginModel>().AsSelf();
 
+            builder.RegisterType<QuestionListModel>().AsSelf();
             builder.RegisterType<QuestionCreateModel>().AsSelf();
             builder.RegisterType<QuestionViewModel>().AsSelf();
             builder.RegisterType<QuestionUpdateModel>().AsSelf();
