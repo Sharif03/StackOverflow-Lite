@@ -7,9 +7,9 @@ using StackOverflowLite.Infrastructure;
 using StackOverflowLite.Web.Areas.Admin.Models;
 using static System.Formats.Asn1.AsnWriter;
 
-namespace StackOverflowLite.Web.Areas.User.Controllers
+namespace StackOverflowLite.Web.Areas.Identity.Controllers
 {
-    [Area("User")]
+    [Area("Identity")]
     [Authorize]
     public class UserController : Controller
     {

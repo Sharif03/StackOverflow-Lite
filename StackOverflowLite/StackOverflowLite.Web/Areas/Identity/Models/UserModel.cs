@@ -6,7 +6,7 @@ using StackOverflowLite.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
 
-namespace StackOverflowLite.Web.Areas.User.Models
+namespace StackOverflowLite.Web.Areas.Identity.Models
 {
     public class UserModel
     {

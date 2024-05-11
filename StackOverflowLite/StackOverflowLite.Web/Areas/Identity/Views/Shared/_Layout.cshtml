@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>@ViewData["Title"] - StackOverflowLite.Web</title>
+	<title>@ViewData["Title"] - StackOverflowLite | User</title>
 
 	<!-- Google Font: Source Sans Pro -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -43,16 +43,7 @@
 					<a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
 				</li>
 				<li class="nav-item d-none d-sm-inline-block">
-					<a href="index3.html" class="nav-link">Home</a>
-				</li>
-				<li class="nav-item d-none d-sm-inline-block">
-					<a href="#" class="nav-link">Contact</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link text-dark accent-blue" asp-area="Admin" asp-controller="Question" asp-action="Index">View Questions</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link text-dark accent-blue" asp-area="Admin" asp-controller="Question" asp-action="Create">Ask Question</a>
+					<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
 				</li>
 			</ul>
 
@@ -195,6 +186,14 @@
 					</div>
 					<div class="info">
 						<a href="#" class="d-block">Alexander Pierce</a>
+					</div>
+					<div>
+						<li>
+							<a class="text-white accent-blue" asp-area="Admin" asp-controller="Question" asp-action="Index">View Questions</a>
+						</li>
+						<li>
+							<a class="text-white accent-blue" asp-area="Admin" asp-controller="Question" asp-action="Create">Ask Question</a>
+						</li>
 					</div>
 				</div>
 
