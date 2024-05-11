@@ -1,16 +1,105 @@
 ﻿@model QuestionViewModel
-@using System.Web
 
 @{
     ViewData["Title"] = "Question Details";
 }
 
-<div class="container">
-    <h1>@Model.Title</h1>
-    <p><strong>Content:</strong> @Html.Raw(Model.Content)</p>
-    <p><strong>Tags:</strong> @Model.Tags</p>
-    <p><strong>Upvote:</strong> @Model.Upvote</p>
-    <p><strong>Downvote:</strong> @Model.Downvote</p>
-    <p><strong>Total Votes:</strong> @Model.VoteCount</p>
-    <p><strong>Question Posted:</strong> @Model.QuestionPosted.ToString("yyyy-MM-dd HH:mm:ss")</p>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">@Model.Title</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">@Html.Raw(Model.Content)</p>
+                    <p class="card-text"><strong>Tags:</strong> @Model.Tags</p>
+
+                    <p class="card-text"><strong>Posted on:</strong> @Model.QuestionPosted.ToString("MMMM dd, yyyy 'at' HH:mm")</p>
+                </div>
+            </div>
+
+            <!-- Comments Section -->
+            <div class="mt-4">
+                <h5>Comments</h5>
+                <!-- Loop through and display question comments here -->
+                @foreach (var comment in Model.QuestionComments)
+                {
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <p class="card-text">@Html.Raw(comment.Content)</p>
+                            <p class="card-text"><strong>Commented by:</strong> @comment.User.UserName</p>
+                            <p class="card-text"><strong>Commented on:</strong> @comment.CommentPosted.ToString("MMMM dd, yyyy 'at' HH:mm")</p>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Add Comment Button -->
+            <div class="mt-4">
+                <button type="button" class="btn btn-primary" onclick="addComment()">Add Comment</button>
+            </div>
+
+            <!-- Answer Section -->
+            <div class="mt-4">
+                <h5>Answers</h5>
+                <!-- Loop through and display question answers here -->
+                @foreach (var answer in Model.Answers)
+                {
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <p class="card-text">@Html.Raw(answer.Content)</p>
+                            <p class="card-text"><strong>Commented by:</strong> @answer.User.UserName</p>
+                            <p class="card-text"><strong>Commented on:</strong> @answer.AnswerPosted.ToString("MMMM dd, yyyy 'at' HH:mm")</p>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Add Answer Button -->
+            <div class="mt-4">
+                <button type="button" class="btn btn-primary" onclick="addAnswer()">Add Answer</button>
+            </div>
+        </div>
+
+        <!-- Sidebar for Upvote/Downvote -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Votes</h5>
+                    <div>
+                        <button type="button" class="btn btn-success" onclick="upvoteQuestion('@Model.Id')">Upvote</button>
+                        <span class="ml-2">@Model.Upvote</span>
+                    </div>
+                    <div class="mt-3">
+                        <button type="button" class="btn btn-danger" onclick="downvoteQuestion('@Model.Id')">Downvote</button>
+                        <span class="ml-2">@Model.Downvote</span>
+                    </div>
+                    <hr>
+                    <p>Total Votes: @Model.VoteCount</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+@section Scripts
+    {
+    <script>
+        function upvoteQuestion(questionId) {
+            // Implement upvote logic
+        }
+
+        function downvoteQuestion(questionId) {
+            // Implement downvote logic
+        }
+
+        function addComment() {
+            // Implement logic to add a comment
+        }
+
+        function addAnswer() {
+            // Implement logic to add an answer
+        }
+    </script>
+}
