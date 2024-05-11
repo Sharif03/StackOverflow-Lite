@@ -7,7 +7,15 @@ This project is a simplified version of the popular Q&amp;A website, Stack Overf
 03. Users can use markdown editors to post code in questions.
 04. Notification toaster added
 05. There will be tags in question
-06. Users can view their own questions.
+06. Users can view their question List in a table.
+07. Users can edit their questions.
+08. Users can delete their questions.
+09. Users can View their single details.
+10. User can search question from the list table
+11. User can sort question list based on Title & Tags
+12. Authorization added in QuestionController (Need Registration & Login to interact with site functionality)
+13. Separate Admin panel & User panel using UserController & Related view pages & models
+
 
 ## Project Features: Non-Functional requirements
 01. Project testable, write unit tests for question service
@@ -24,15 +32,11 @@ This project is a simplified version of the popular Q&amp;A website, Stack Overf
 12. All completed functional, non function things mentionedin the readme file.
 
 ## Project Features: Bonus requirements
-01. 
-02. 
+01. Clouse toaster messege
+02. Get user email & guid in QuestionPostingService
 03.
 04.
 05. 
-
-
-
-
 
 ## Technologies Used
 - ASP.NET Core for backend development
@@ -40,4 +44,12 @@ This project is a simplified version of the popular Q&amp;A website, Stack Overf
 - HTML, CSS, and JavaScript for frontend development
 - Bootstrap for styling
 - SQL Server for database storage
+
+## Project Feture developments:
+01. Add Comment on Questions(View & Edit & Delete)
+02. Add Answer on Questions(View & Edit & Delete)
+03. Add Comment on Answers(View & Edit & Delete)
+04. Add Upvote & Downvote on Question & Answers(Single Question)
+05. Update User panel & Admin panel
+06. Update User banel based on Badge & Reputation
 
