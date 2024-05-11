@@ -10,6 +10,7 @@ using static System.Formats.Asn1.AsnWriter;
 namespace StackOverflowLite.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class QuestionController : Controller
     {
         private readonly ILifetimeScope _scope;
