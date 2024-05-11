@@ -16,14 +16,14 @@
         {
             // Redirect to admin panel
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Question" asp-action="Create">Admin Panel</a>
+                <a class="nav-link text-dark" asp-area="User" asp-controller="User" asp-action="AdminPanel">Admin Panel</a>
             </li>            
         }
         else
         {
             // Redirect to user panel
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Question" asp-action="Index">User Panel</a>
+                <a class="nav-link text-dark" asp-area="User" asp-controller="User" asp-action="UserPanel">User Panel</a>
             </li>
         }
 
