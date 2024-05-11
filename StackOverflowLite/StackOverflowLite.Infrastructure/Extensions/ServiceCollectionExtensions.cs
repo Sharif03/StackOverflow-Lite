@@ -56,7 +56,7 @@ namespace StackOverflowLite.Infrastructure.Extensions
                     options.LoginPath = new PathString("/Account/Login");
                     options.AccessDeniedPath = new PathString("/Account/Login");
                     options.LogoutPath = new PathString("/Account/Logout");
-                    options.Cookie.Name = "ExamPortal.Identity";
+                    options.Cookie.Name = "StackOverflowLitePortal.Identity";
                     options.SlidingExpiration = true;
                     options.ExpireTimeSpan = TimeSpan.FromHours(1);
                 });
